@@ -5,7 +5,18 @@ import { findOne, updateOne } from "../../../../DB/DBMethods.js";
 import moment from "moment"
 import { asyncHandler } from "../../../services/handelError.js";
 
-
+export const SignOut = async (req, res) => {
+    try {
+        const _id = req.user._id
+        await userModel.findOneAndUpdate(
+            { _id, isOnline: true },
+            { isOnline: false, lastSeen: moment().format() }
+        );
+        return res.status(200).json({ message: "Done" });
+    } catch (error) {
+        return res.status(500).json({ message: "Internal Server error" });
+    }
+};
 
 export const profile = asyncHandler(
     async (req, res) => {
