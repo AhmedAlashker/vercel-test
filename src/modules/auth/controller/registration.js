@@ -108,12 +108,14 @@ export const signin = asyncHandler(async (req, res, next) => {
 export const sendCode = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
   const user = await findOne({ model: userModel, filter: { email }, });
+
   if (user?.isDeleted || user?.blocked) {
     return next(new Error("Can not send code to not register account or blocked"))
   } else {
     const code = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000)
+    console.log("ahjds");
     // await userModel.updateOne({ _id: user._id }, { code })
-    await updateOne({ userModel, filter: { _id: user._id }, data: { code } });
+    await updateOne({ model: userModel, filter: { _id: user._id }, data: { code } });
     sendEmail(user.email,
       'forget password', `<h1> Plz Use this code : ${code} to reset your Password </h1>`)
     return res.json({ message: "Done" });
@@ -130,7 +132,7 @@ export const forgetPassword = asyncHandler(async (req, res, next) => {
       return next(new Error("In-valid Code", { cause: 400 }));
     } else {
       const hashPassword = await bcrypt.hash(password, parseInt(process.env.SALTROUND))
-      await updateOne({ userModel, filter: { _id: user._id }, data: { password: hashPassword, code: null } });
+      await updateOne({ model: userModel, filter: { _id: user._id }, data: { password: hashPassword, code: null } });
       return res.status(200).json({ message: "Done" })
     }
   }

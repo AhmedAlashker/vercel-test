@@ -1,7 +1,4 @@
-// import { asyncHandler } from './../services/handelError.js';
 const dataMethod = ['body', 'params', 'query', 'headers']
-
-
 export const validation = (Schema) => {
 
     return (req, res, next) => {

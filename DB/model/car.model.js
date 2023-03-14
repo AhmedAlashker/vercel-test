@@ -1,6 +1,5 @@
 import { Schema, model, Types } from "mongoose";
 
-
 const carSchema = new Schema({
 
     carMake: {
@@ -18,10 +17,6 @@ const carSchema = new Schema({
         type: String,
         required: [true, 'image is required'],
     },
-    // license: {
-    //     type: String,
-    //     required: [true, 'image is required'],
-    // },
     createdBy: {
         type: Types.ObjectId,
         ref: 'User',
