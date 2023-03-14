@@ -5,45 +5,6 @@ import { findOne, updateOne } from "../../../../DB/DBMethods.js";
 import moment from "moment"
 import { asyncHandler } from "../../../services/handelError.js";
 
-export const SignOut = async (req, res) => {
-    try {
-        const _id = req.user._id
-        await userModel.findOneAndUpdate(
-            { _id, isOnline: true },
-            { isOnline: false, lastSeen: moment().format() }
-        );
-        return res.status(200).json({ message: "Done" });
-    } catch (error) {
-        return res.status(500).json({ message: "Internal Server error" });
-    }
-};
-
-// export const softdeleteAccount = async (req, res) => {
-//     try {
-//         const { _id } = req.user;
-//         const user_check = await userModel.findOneAndUpdate(
-//             {
-//                 _id,
-//                 blocked: false,
-//                 Role: "User"
-//             },
-//             {
-//                 isDeleted: true
-//             }
-//         );
-//         if (!user_check) {
-//             res.status(400).json({
-//                 message:
-//                     " This account is already marked as deleted o blockecd from the admin side "
-//             });
-//         } else {
-//             res.status(200).json({ message: "your account is marked as deleted successfully" });
-//         }
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).json({ message: "Internal Server error" });
-//     }
-// }
 
 
 export const profile = asyncHandler(
