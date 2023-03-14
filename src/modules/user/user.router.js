@@ -12,7 +12,7 @@ router.get("/profile", auth(endPoint.profile), User_Controller.profile)
 
 router.patch("/updatePassword", auth(endPoint.updatePassword), User_Controller.updatePassword)
 
-
+router.patch("/signOut",auth(endPoint.profile) ,User_Controller.SignOut);
 
 
 
